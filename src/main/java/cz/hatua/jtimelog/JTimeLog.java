@@ -522,6 +522,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
     private void jTFReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFReportActionPerformed
         String out = GTLSReport.generateReport(jCBReportType.getSelectedItem().toString(), Arrays.asList((jTFReport.getText()).split(" +")));
         logsViewTA.setText(out);
+        logsViewTA.setCaretPosition(0);
     }//GEN-LAST:event_jTFReportActionPerformed
 
     private void openFile(File f) {
