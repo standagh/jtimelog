@@ -27,9 +27,9 @@ public class GTLSReport {
     
     public static List<String> getReportTypes() {
         List<String> rt = new ArrayList<>();
-        rt.add("gtlsreport");
         rt.add("gtlsreportd");
         rt.add("gtlsreports");
+        rt.add("gtlsreport");
         return rt;
     }
     
