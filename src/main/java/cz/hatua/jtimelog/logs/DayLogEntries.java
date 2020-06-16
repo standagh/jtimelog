@@ -38,22 +38,22 @@ public class DayLogEntries {
     	}
     	
     	if(le.getDate().compareTo(day) < 0) {
-    		throw new JTimeLogException("in past day");
+    		throw new JTimeLogException(String.format("Entry in past day: '%s'", le.toString()));
     	}
     	
     	if( le.getDate().equals(day) && le.getTime().compareTo(NEWDAYSTART) < 0 ) {
-    		throw new JTimeLogException("in past time");
+    		throw new JTimeLogException(String.format("Entry in past time: '%s'", le.toString()));
     	}
 
     	if(le.getDate().compareTo(day.plusDays(1)) > 0) {
-    		throw new JTimeLogException("in future day");
+    		throw new JTimeLogException(String.format("Entry in future day: '%s'", le.toString()));
     	}
     	
     	if( le.getDate().equals(day.plusDays(1)) && le.getTime().compareTo(NEWDAYSTART) >= 0 ) {
-    		throw new JTimeLogException("in future time");
+    		throw new JTimeLogException(String.format("Entry in future day: '%s'", le.toString()));
     	}
 
-    	throw new IllegalArgumentException("Not valid date/time and not valid outer interval");
+    	throw new IllegalArgumentException(String.format("Not valid date/time and not valid outer interval for entry: '%s'", le.toString()));
     }
 
     void validateSequence(LogEntry le) throws JTimeLogException {

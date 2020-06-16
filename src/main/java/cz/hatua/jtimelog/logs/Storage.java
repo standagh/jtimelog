@@ -71,11 +71,12 @@ public class Storage {
 			for(LocalDate theDay: new TreeSet<LocalDate>(lnsPerDay.keySet())) {
 				ale.setCurrentDay(theDay);
 				for(LogEntry le: lnsPerDay.get(theDay)) {
-				    try {
-					    ale.addLogEntry(le, theDay);
+					try {
+						ale.addLogEntry(le, theDay);
 					} catch(JTimeLogException e) {
-					    log.error(String.format("Error while reading log entry from file '%s' from file '%s'", le.entry, fileName), e);
-					    throw e;
+						String msg = String.format("Error while reading log entry '%s' from file '%s': '%s'", le.entry, fileName, e.getMessage()); 
+						log.error(msg, e);
+						throw new JTimeLogException(msg, e);
 					}
 				}
 			}

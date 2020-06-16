@@ -77,13 +77,15 @@ public class Logs implements EntriesChangedNotificationListener {
     		backupList = ale.getNotifyList();
     	}
     	
-        ale = new AllLogEntries();
-        ale.reloadData();
-        
-        if(backupList != null) {
-        	ale.setNotifyList(backupList);
-        	sendEntriesChangedNotification(displayedDay);
-        }
+    	try {
+	        ale = new AllLogEntries();
+	        ale.reloadData();
+    	} finally {
+	        if(backupList != null) {
+	        	ale.setNotifyList(backupList);
+	        	sendEntriesChangedNotification(displayedDay);
+	        }
+    	}
     }
 
     public void sendEntriesChangedNotification(LocalDate day) {

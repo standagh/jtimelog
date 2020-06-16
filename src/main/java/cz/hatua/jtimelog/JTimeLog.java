@@ -515,6 +515,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
             ctrlLogs.reInit();
         } catch (JTimeLogException ex) {
             log.error("Error while reloading categories", ex);
+            logsViewTA.setText(ex.toString());
         }
         populateCats();
     }//GEN-LAST:event_jMenuItemReloadActionPerformed
