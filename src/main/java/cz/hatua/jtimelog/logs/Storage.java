@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import cz.hatua.jtimelog.Configuration;
 import cz.hatua.jtimelog.JTimeLogException;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Storage
@@ -193,10 +195,7 @@ public class Storage {
 			saveEmptyLine();
 		}
 		saveLine(e.entry);
-		//TODO: compact this 3 lines to single one
-		List<String> al = new ArrayList<>();
-		al.add(e.entry);
-		setStartDayOfLastLine(al);
+                setStartDayOfLastLine(Collections.singletonList(e.entry));
 	}
 	
 	private void saveEmptyLine() throws JTimeLogException {
