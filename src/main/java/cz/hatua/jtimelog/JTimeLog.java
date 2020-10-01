@@ -18,7 +18,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
@@ -29,22 +28,15 @@ import org.slf4j.LoggerFactory;
 import cz.hatua.jtimelog.logs.Logs;
 import cz.hatua.jtimelog.cats.Cat;
 import cz.hatua.jtimelog.cats.Cats;
-import cz.hatua.jtimelog.logs.DayLogEntries;
 import cz.hatua.jtimelog.logs.EntriesChangedNotificationListener;
-import cz.hatua.jtimelog.logs.LogEntry;
 import java.awt.Component;
 import java.awt.Font;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Arrays;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
@@ -130,34 +122,34 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
             throw new RuntimeException("Error while initializing JTimelog", e);
         }
 
-        actionViewToday = new ActionViewToday("View Today", new ImageIcon(getClass().getClassLoader().getResource("icons/view_today.png")), KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.ALT_MASK), ctrlLogs, displayDayL);
+        actionViewToday = new ActionViewToday("View Today", new ImageIcon(getClass().getClassLoader().getResource("icons/view_today.png")), KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.ALT_DOWN_MASK), ctrlLogs, displayDayL);
         jMenuItemToday.setAction(actionViewToday);
         goDayTodayB.setAction(actionViewToday);
         goDayTodayB.setHideActionText(true);
 
-        actionViewNextDay = new ActionViewNextDay("View Next Day", new ImageIcon(getClass().getClassLoader().getResource("icons/view_next_day.png")), KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.ALT_MASK), ctrlLogs, displayDayL);
+        actionViewNextDay = new ActionViewNextDay("View Next Day", new ImageIcon(getClass().getClassLoader().getResource("icons/view_next_day.png")), KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.ALT_DOWN_MASK), ctrlLogs, displayDayL);
         jMenuItemNextDay.setAction(actionViewNextDay);
         goDayNextB.setAction(actionViewNextDay);
         goDayNextB.setHideActionText(true);
 
-        actionViewPrevDay = new ActionViewPrevDay("View Previous Day", new ImageIcon(getClass().getClassLoader().getResource("icons/view_prev_day.png")), KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.ALT_MASK), ctrlLogs, displayDayL);
+        actionViewPrevDay = new ActionViewPrevDay("View Previous Day", new ImageIcon(getClass().getClassLoader().getResource("icons/view_prev_day.png")), KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.ALT_DOWN_MASK), ctrlLogs, displayDayL);
         jMenuItemPreviousDay.setAction(actionViewPrevDay);
         goDayPrevB.setAction(actionViewPrevDay);
         goDayPrevB.setHideActionText(true);
 
-        actionViewNextWeek = new ActionViewNextWeek("View Next Week", null, KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK), ctrlLogs, displayDayL);
+        actionViewNextWeek = new ActionViewNextWeek("View Next Week", null, KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK), ctrlLogs, displayDayL);
         jMenuItemNextWeek.setAction(actionViewNextWeek);
 
-        actionViewPrevWeek = new ActionViewPrevWeek("View Previous Week", null, KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK), ctrlLogs, displayDayL);
+        actionViewPrevWeek = new ActionViewPrevWeek("View Previous Week", null, KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK), ctrlLogs, displayDayL);
         jMenuItemPreviousWeek.setAction(actionViewPrevWeek);
 
-        actionChangeFormatDetail = new ActionChangeFormatDetail("Change Format Detail", null, KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.ALT_MASK), ctrlFormat, this);
+        actionChangeFormatDetail = new ActionChangeFormatDetail("Change Format Detail", null, KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.ALT_DOWN_MASK), ctrlFormat, this);
         jMenuItemFormatDetail.setAction(actionChangeFormatDetail);
 
-        actionChangeFormatDetailSorted = new ActionChangeFormatDetailSorted("Change Format Detail Sorted", null, KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.ALT_MASK), ctrlFormat, this);
+        actionChangeFormatDetailSorted = new ActionChangeFormatDetailSorted("Change Format Detail Sorted", null, KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.ALT_DOWN_MASK), ctrlFormat, this);
         jMenuItemFormatDetailSorted.setAction(actionChangeFormatDetailSorted);
 
-        actionChangeFormatSummary = new ActionChangeFormatSummary("Change Format Summary", null, KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.ALT_MASK), ctrlFormat, this);
+        actionChangeFormatSummary = new ActionChangeFormatSummary("Change Format Summary", null, KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.ALT_DOWN_MASK), ctrlFormat, this);
         jMenuItemFormatSummary.setAction(actionChangeFormatSummary);
 
         jCBReportType.removeAllItems();
@@ -419,7 +411,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         jMenuTools.setText("Tools");
         jMenuTools.setToolTipText("");
 
-        jMenuItemEditTasks.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemEditTasks.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemEditTasks.setText("Edit tasks");
         jMenuItemEditTasks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -428,7 +420,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         });
         jMenuTools.add(jMenuItemEditTasks);
 
-        jMenuItemEditCategories.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemEditCategories.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemEditCategories.setText("Edit Categories");
         jMenuItemEditCategories.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -437,7 +429,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         });
         jMenuTools.add(jMenuItemEditCategories);
 
-        jMenuItemReload.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemReload.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemReload.setText("Reload data");
         jMenuItemReload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -538,7 +530,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
     }
 
     private void updateDisplaydDayLabel() {
-        displayDayL.setText(ctrlLogs.getDisplayedDay().format(DateTimeFormatter.ofPattern(Configuration.getConfiguration().get("DATEWITHDAYPATTERN"))));
+        displayDayL.setText(ctrlLogs.getDisplayedDay().format(DateTimeFormatter.ofPattern(Configuration.getCfgString("DATEWITHDAYPATTERN"))));
     }
 
     private void setNewLogMsg() {
@@ -605,13 +597,13 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JTimeLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTimeLog.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JTimeLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTimeLog.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JTimeLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTimeLog.class.getName()).log(Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JTimeLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTimeLog.class.getName()).log(Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

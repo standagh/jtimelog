@@ -9,14 +9,11 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import cz.hatua.jtimelog.logs.Logs;
 import cz.hatua.jtimelog.Configuration;
 import cz.hatua.jtimelog.JTimeLogException;
-import cz.hatua.jtimelog.logs.DayLogEntries;
 
 /**
  * Controller
@@ -30,7 +27,7 @@ public class LogsTest {
         cfg = new HashMap<>();
         cfg.put("DATAFILE", "/home/standa/jtimelog/jtimelog_test.txt");
         cfg.put("CATEGORIESFILE", "/home/standa/jtimelog/jtasks.txt");
-        cfg.put("NEWDAYSTART", new Integer((LocalTime.now().getHour()+1) % 24 ).toString());
+        cfg.put("NEWDAYSTART", Integer.valueOf((LocalTime.now().getHour()+1) % 24 ).toString());
         cfg.put("DATETIMEPATTERN", "yyyy-MM-dd HH:mm");
         cfg.put("TIMEPATTERN", "HH:mm");
 		Configuration.getConfiguration().resetConfiguration(cfg);

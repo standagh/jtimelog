@@ -29,7 +29,7 @@ public class Cats {
     }
 
     public String getCategoriesFileName() {
-        return Configuration.getConfiguration().get("CATEGORIESFILE");
+        return Configuration.getCfgString("CATEGORIESFILE");
     }
     
     public void reloadCats() throws JTimeLogException {

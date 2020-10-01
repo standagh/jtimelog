@@ -2,7 +2,6 @@ package cz.hatua.jtimelog.logs;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Set;
 
 import org.slf4j.LoggerFactory;
@@ -67,7 +66,7 @@ public class Logs implements EntriesChangedNotificationListener {
     }
     
     public String getTasksFileName() {
-        return Configuration.getConfiguration().get("DATAFILE");
+        return Configuration.getCfgString("DATAFILE");
     }
 
     public void reInit() throws JTimeLogException {

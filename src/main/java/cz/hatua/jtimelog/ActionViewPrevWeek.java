@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.KeyStroke;
-import java.time.format.DateTimeFormatter;
 
 import cz.hatua.jtimelog.logs.Logs;
 

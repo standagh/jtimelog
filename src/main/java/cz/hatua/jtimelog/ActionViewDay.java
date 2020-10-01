@@ -38,7 +38,7 @@ public abstract class ActionViewDay extends AbstractAction {
     }
     
     String formatDate() {
-        return ctrl.getDisplayedDay().format(DateTimeFormatter.ofPattern(Configuration.getConfiguration().get("DATEWITHDAYPATTERN")));
+        return ctrl.getDisplayedDay().format(DateTimeFormatter.ofPattern(Configuration.getCfgString("DATEWITHDAYPATTERN")));
     }
     
 }

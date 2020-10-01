@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import cz.hatua.jtimelog.Configuration;
 import cz.hatua.jtimelog.JTimeLogException;
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -36,14 +35,8 @@ public class Storage {
 
 	Storage() throws JTimeLogException {
 		readingData = false;
-		setFileName(Configuration.getConfiguration().get("DATAFILE"));
-		if(! new File(fileName).exists()) {
-			try {
-				FileUtils.write(new File(fileName), "", "UTF-8");
-			} catch (IOException e) {
-				throw new JTimeLogException("Unable to create data file", e);
-			}
-		}
+		setFileName(Configuration.getCfgString("DATAFILE"));
+                touchDataFile(fileName);
 		startDayOfLastEntry = null;
 	}
 
@@ -52,6 +45,16 @@ public class Storage {
 		this.fileName = fileName;
 	}
 
+        private void touchDataFile(String fileName) throws JTimeLogException {
+		if(! new File(fileName).exists()) {
+			try {
+				FileUtils.write(new File(fileName), "", "UTF-8");
+			} catch (IOException e) {
+				throw new JTimeLogException("Unable to create data file", e);
+			}
+		}
+        }
+        
 	/**
 	 * 
 	 * @param target - what structure will be updated by reading data from file
@@ -92,7 +95,7 @@ public class Storage {
 	List<String> readAllLinesFromDataFile() throws JTimeLogException {
 		log.debug("Reading lines from data file");
 		List<String> lns = getLinesOfDataFile();
-		setStartDayOfLastLine(lns);
+		setStartDateOfLastEntry(getLastEntry(lns));
 		return lns;
 	}
 	
@@ -107,24 +110,24 @@ public class Storage {
 		return lns;
 	}
 	
-	void setStartDayOfLastLine(List<String> lns) {
+	LogEntry getLastEntry(List<String> lns) {
 		if(lns.size() == 0) {
-			log.debug("startDayOfLastEntry set to null for empty list of lines");
-			startDayOfLastEntry = null;
-			return;
+			log.debug("list of lines is empty");
+			return null;
 		}
-		
-		String lastEntry = lns.get(lns.size()-1).trim();
-		if(lastEntry.equals("")) {
-			log.debug("startDayOfLastEntry set to null for empty last line");
+		return new LogEntry(lns.get(lns.size()-1).trim());
+	}
+	
+	void setStartDateOfLastEntry(LogEntry le) {
+		if(le == null) {
 			startDayOfLastEntry = null;
+			log.debug("startDayOfLastEntry set to null");
 		} else {
-			startDayOfLastEntry = getStartDayFromLogEntry(new LogEntry(lastEntry));
+			startDayOfLastEntry = getStartDayForLogEntry(le);
 			log.debug("startDayOfLastEntry set to '{}'", startDayOfLastEntry);
 		}
-		return;
 	}
-
+	
 	/*
 	 * split lines to days and determine accounting day
 	 */
@@ -148,11 +151,11 @@ public class Storage {
 			}
 			LogEntry le = new LogEntry(ln);
 			if (firstLine) {
-				theDay = getStartDayFromLogEntry(le);
+				theDay = getStartDayForLogEntry(le);
 				if (out.containsKey(theDay)) {
 					throw new JTimeLogException(
 							String.format("Duplicate theDay '%s' for line no '%d'. NewDayStart is configured to '%s'.",
-									theDay, lnCounter, Configuration.getConfiguration().get("NEWDAYSTART")));
+									theDay, lnCounter, Configuration.getCfgInteger("NEWDAYSTART")));
 				}
 				dayEntries = new ArrayList<LogEntry>();
 				out.put(theDay, dayEntries);
@@ -168,9 +171,9 @@ public class Storage {
 		lns.add(0, "");
 	}
 	
-	static LocalDate getStartDayFromLogEntry(LogEntry le) {
+	static LocalDate getStartDayForLogEntry(LogEntry le) {
 		LocalTime lt = le.getTime();
-		if (lt.compareTo(LocalTime.of(new Integer(Configuration.getConfiguration().get("NEWDAYSTART")), 0)) >= 0) {
+		if (lt.compareTo(LocalTime.of(Configuration.getCfgInteger("NEWDAYSTART"), 0)) >= 0) {
 			return le.getDate();
 		} else {
 			return le.getDate().minusDays(1);
@@ -178,8 +181,8 @@ public class Storage {
 	}
 
 	// TODO: not tested so far
-	void saveEntry(LogEntry e) throws JTimeLogException {
-		LocalDate eStartDay = getStartDayFromLogEntry(e);
+	void saveEntry(LogEntry le) throws JTimeLogException {
+		LocalDate eStartDay = getStartDayForLogEntry(le);
 		int cmp;
 		if(startDayOfLastEntry == null) {
 			// if startDayOfLastEntry was not set, yet
@@ -194,8 +197,8 @@ public class Storage {
 		if(cmp > 0) {
 			saveEmptyLine();
 		}
-		saveLine(e.entry);
-                setStartDayOfLastLine(Collections.singletonList(e.entry));
+		saveLine(le.entry);
+        setStartDateOfLastEntry(le);
 	}
 	
 	private void saveEmptyLine() throws JTimeLogException {

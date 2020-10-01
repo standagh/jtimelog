@@ -36,6 +36,14 @@ public class Configuration {
         }
         return instance;
     }
+    
+    public static String getCfgString(String key) {
+    	return  Configuration.getConfiguration().get(key);
+    }
+
+    public static Integer getCfgInteger(String key) {
+    	return  Integer.valueOf(Configuration.getConfiguration().get(key));
+    }
 
     void replaceFromEnvVars() {
         Map<String,String> envVars = System.getenv();

@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,8 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import cz.hatua.jtimelog.Configuration;
 import cz.hatua.jtimelog.JTimeLogException;
-import cz.hatua.jtimelog.logs.LogEntry;
-import cz.hatua.jtimelog.logs.Storage;
 
 
 public class StorageTest {
@@ -41,6 +38,7 @@ public class StorageTest {
         cfg.put("TIMEPATTERN", "HH:mm");
 		Configuration.getConfiguration().resetConfiguration(cfg);
 		new File(cfg.get("DATAFILE")).delete();
+		log.debug("Init complete");
 	}
 	
 	@Test

@@ -9,8 +9,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import org.hamcrest.core.IsSame;
-
 import cz.hatua.jtimelog.Utils;
 
 /**
@@ -26,21 +24,21 @@ public class LogEntry {
 
     LogEntry(String s) {
         entry = s;
-        endTime = getEndTimeFromEntry(s);
-        message = getMessageFromEntry(s);
-        task = getTaskFromMessage(message);
+        endTime = getEndTimeForEntry(s);
+        message = getMessageForEntry(s);
+        task = getTaskForMessage(message);
     }
 
-    LocalDateTime getEndTimeFromEntry(String s) {
+    LocalDateTime getEndTimeForEntry(String s) {
         // we expect line starts with: '2020-01-10 10:10: msg'
         return Utils.getDateTimeFromEntry(s);
     }
 
-    String getMessageFromEntry(String s) {
+    String getMessageForEntry(String s) {
     	 return Utils.getMessageFromEntry(s);
     }
     
-    String getTaskFromMessage(String s) {
+    String getTaskForMessage(String s) {
         String p1 = s.split(":")[0];
         if(p1.matches("^[\\p{Alnum}_-]+$")) {
             return p1;

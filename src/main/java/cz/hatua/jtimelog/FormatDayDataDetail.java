@@ -56,7 +56,7 @@ public class FormatDayDataDetail extends FormatDayData {
      * in case from is null, use to and to to format interval
      */
     static String formatTimeSpan(LocalDateTime from, LocalDateTime to) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Configuration.getConfiguration().get("TIMEPATTERN"));
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Configuration.getCfgString("TIMEPATTERN"));
         if (from == null) {
             return String.format("%s-%s", to.format(dtf), to.format(dtf));
         }

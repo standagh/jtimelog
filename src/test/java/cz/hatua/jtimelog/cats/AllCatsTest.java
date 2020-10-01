@@ -1,9 +1,6 @@
 package cz.hatua.jtimelog.cats;
 
-import static org.junit.Assert.assertTrue;
-
 import java.io.File;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +20,7 @@ public class AllCatsTest {
 		cfg = new HashMap<>();
 		cfg.put("DATAFILE", "/home/standa/jtimelog/jtimelog_test.txt");
 		cfg.put("CATEGORIESFILE", "/home/standa/DataSync/zim_notes_smi/Data/gtimelog/tasks.txt");
-		cfg.put("NEWDAYSTART", new Integer((LocalTime.now().getHour() + 1) % 24).toString());
+		cfg.put("NEWDAYSTART", Integer.valueOf((LocalTime.now().getHour() + 1) % 24).toString());
 		cfg.put("DATETIMEPATTERN", "yyyy-MM-dd HH:mm");
 		cfg.put("TIMEPATTERN", "HH:mm");
 		Configuration.getConfiguration().resetConfiguration(cfg);

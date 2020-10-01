@@ -108,7 +108,7 @@ public class AllLogEntries {
      */
     LocalDate countCurrentDay() {
         LocalTime timeNow = LocalTime.now();
-        int NEWDAYSTART = Integer.parseInt(Configuration.getConfiguration().get("NEWDAYSTART"));
+        int NEWDAYSTART = Configuration.getCfgInteger("NEWDAYSTART");
         
         LocalDate ld;
         if(NEWDAYSTART > timeNow.getHour()) {

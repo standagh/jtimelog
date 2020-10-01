@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,8 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import cz.hatua.jtimelog.Configuration;
 import cz.hatua.jtimelog.JTimeLogException;
-import cz.hatua.jtimelog.logs.DayLogEntries;
-import cz.hatua.jtimelog.logs.LogEntry;
+//import cz.hatua.jtimelog.logs.DayLogEntries;
+//import cz.hatua.jtimelog.logs.LogEntry;
 
 public class DayLogEntriesTest {
 
@@ -34,6 +33,7 @@ public class DayLogEntriesTest {
         cfg.put("TIMEPATTERN", "HH:mm");
 		Configuration.getConfiguration().resetConfiguration(cfg);
 		new File(cfg.get("DATAFILE")).delete();
+		log.debug("Setup finished");
 	}
 	
 	@Test

@@ -14,14 +14,14 @@ import cz.hatua.jtimelog.JTimeLogException;
  */
 public class DayLogEntries {
 
-    LocalTime NEWDAYSTART;
+    LocalTime newDayStart;
     LocalDate day;
     List<LogEntry> entries;
     
     
     DayLogEntries(LocalDate day) {
         this.day = day;
-        NEWDAYSTART = LocalTime.of(new Integer(Configuration.getConfiguration().get("NEWDAYSTART")), 0);
+        newDayStart = LocalTime.of(Configuration.getCfgInteger("NEWDAYSTART"), 0);
         entries = new ArrayList<LogEntry>();
     }
 
@@ -32,8 +32,8 @@ public class DayLogEntries {
     }
     
     void validateLogEntry(LogEntry le) throws JTimeLogException {
-    	if( (le.getDate().compareTo(day) == 0 && le.getTime().compareTo(NEWDAYSTART) >= 0) ||
-    			(le.getDate().compareTo(day.plusDays(1)) == 0 && le.getTime().compareTo(NEWDAYSTART) < 0)) {
+    	if( (le.getDate().compareTo(day) == 0 && le.getTime().compareTo(newDayStart) >= 0) ||
+    			(le.getDate().compareTo(day.plusDays(1)) == 0 && le.getTime().compareTo(newDayStart) < 0)) {
     		return;
     	}
     	
@@ -41,7 +41,7 @@ public class DayLogEntries {
     		throw new JTimeLogException(String.format("Entry in past day: '%s'", le.toString()));
     	}
     	
-    	if( le.getDate().equals(day) && le.getTime().compareTo(NEWDAYSTART) < 0 ) {
+    	if( le.getDate().equals(day) && le.getTime().compareTo(newDayStart) < 0 ) {
     		throw new JTimeLogException(String.format("Entry in past time: '%s'", le.toString()));
     	}
 
@@ -49,7 +49,7 @@ public class DayLogEntries {
     		throw new JTimeLogException(String.format("Entry in future day: '%s'", le.toString()));
     	}
     	
-    	if( le.getDate().equals(day.plusDays(1)) && le.getTime().compareTo(NEWDAYSTART) >= 0 ) {
+    	if( le.getDate().equals(day.plusDays(1)) && le.getTime().compareTo(newDayStart) >= 0 ) {
     		throw new JTimeLogException(String.format("Entry in future day: '%s'", le.toString()));
     	}
 

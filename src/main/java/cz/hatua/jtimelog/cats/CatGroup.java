@@ -7,7 +7,23 @@ class CatGroup {
 		group = g;
 	}
 	
-	// needs to override hashcode a equals
+	public String getGroup() {
+		return group;
+	}
+	
+	@Override
+	public int hashCode() {
+		return group.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof CatGroup && this.equals((CatGroup)obj);
+	}
+	
+	private boolean equals(CatGroup cg) {
+		return this.group.equals(cg.getGroup());
+	}
 	
 	@Override
 	public String toString() {

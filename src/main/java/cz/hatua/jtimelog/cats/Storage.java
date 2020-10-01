@@ -8,8 +8,6 @@ package cz.hatua.jtimelog.cats;
 import cz.hatua.jtimelog.Configuration;
 import cz.hatua.jtimelog.JTimeLogException;
 
-import static org.hamcrest.CoreMatchers.is;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ public class Storage {
     String fileName;
     
     Storage() {
-        setFileName(Configuration.getConfiguration().get("CATEGORIESFILE"));
+        setFileName(Configuration.getCfgString("CATEGORIESFILE"));
     }
 
     void setFileName(String fileName) {
@@ -44,7 +42,7 @@ public class Storage {
     	}
     }
 
-    List<Cat> getAllCatsFromDataFile() throws JTimeLogException {
+    private List<Cat> getAllCatsFromDataFile() throws JTimeLogException {
         if(!catsFileExists()) {
             createSampleCatsFile();
         }
@@ -77,7 +75,7 @@ public class Storage {
     	return cats;
     }
     
-    void createSampleCatsFile() throws JTimeLogException {
+    private void createSampleCatsFile() throws JTimeLogException {
         try {
             FileUtils.write(new File(fileName), String.join("\n",getSampleCatsFileContent()), "UTF-8");
         } catch (IOException e) {
@@ -86,7 +84,7 @@ public class Storage {
         }        
     }
     
-    List<String> getSampleCatsFileContent() {
+    private List<String> getSampleCatsFileContent() {
         List<String> lsrc = new ArrayList<>();
         lsrc.add("Project_ML1;Milestone 1 of Project PROJECT");
         lsrc.add("Project_ML1_Design;Design part of Milestone 1 of Project PROJECT - ");

@@ -30,7 +30,7 @@ public class Cat {
 
     	// Parse group name
         log.debug("Ignoring groups in categories file");
-        group = group = new String(DEFAULT_GROUP_NAME);
+        group = new String(DEFAULT_GROUP_NAME);
     	if(ln.indexOf(':') > 0) {
             ln = ln.substring(ln.indexOf(':') + 1);
     	}

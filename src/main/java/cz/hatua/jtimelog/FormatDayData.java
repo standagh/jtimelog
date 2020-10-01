@@ -28,7 +28,7 @@ public class FormatDayData implements FormatDayGeneral {
     }
 
     String formatDate(LocalDate ld) {
-        return ld.format(DateTimeFormatter.ofPattern(Configuration.getConfiguration().get("DATEWITHDAYPATTERN")));
+        return ld.format(DateTimeFormatter.ofPattern(Configuration.getCfgString("DATEWITHDAYPATTERN")));
     }
     
 }

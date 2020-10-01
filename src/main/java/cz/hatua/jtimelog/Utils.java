@@ -37,7 +37,7 @@ public class Utils {
     }
     
     public static String formatLocalDateTime(LocalDateTime ldt) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Configuration.getConfiguration().get("DATETIMEPATTERN"));
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Configuration.getCfgString("DATETIMEPATTERN"));
         return LocalDateTime.now().format(dtf);
     }
 }
