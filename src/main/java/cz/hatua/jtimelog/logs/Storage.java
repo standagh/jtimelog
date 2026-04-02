@@ -36,7 +36,7 @@ public class Storage {
 	Storage() throws JTimeLogException {
 		readingData = false;
 		setFileName(Configuration.getCfgString("DATAFILE"));
-                touchDataFile(fileName);
+        ensureDataFileExists(fileName);
 		startDayOfLastEntry = null;
 	}
 
@@ -45,7 +45,7 @@ public class Storage {
 		this.fileName = fileName;
 	}
 
-        private void touchDataFile(String fileName) throws JTimeLogException {
+    private void ensureDataFileExists(String fileName) throws JTimeLogException {
 		if(! new File(fileName).exists()) {
 			try {
 				FileUtils.write(new File(fileName), "", "UTF-8");
@@ -53,7 +53,7 @@ public class Storage {
 				throw new JTimeLogException("Unable to create data file", e);
 			}
 		}
-        }
+    }
         
 	/**
 	 * 
@@ -63,7 +63,7 @@ public class Storage {
 	 * TODO: after data are read, new line is not written in front of first line for new accounting day - should be fixed
 	 * TODO: 2020-02-04 - after data are read, currentDay is not displayed in GUI
 	 */
-	void fillAllLogEntriesFromDataFile(AllLogEntries ale) throws JTimeLogException {
+	public void fillAllLogEntriesFromDataFile(AllLogEntries ale) throws JTimeLogException {
 		log.debug("Disabling saveLine");
 		readingData = true;
 
@@ -99,7 +99,7 @@ public class Storage {
 		return lns;
 	}
 	
-	List<String> getLinesOfDataFile() throws JTimeLogException {
+	private List<String> getLinesOfDataFile() throws JTimeLogException {
 		List<String> lns = null;
 		try {
 			lns = FileUtils.readLines(new File(fileName), "UTF-8");
@@ -110,7 +110,7 @@ public class Storage {
 		return lns;
 	}
 	
-	LogEntry getLastEntry(List<String> lns) {
+	private LogEntry getLastEntry(List<String> lns) {
 		if(lns.size() == 0) {
 			log.debug("list of lines is empty");
 			return null;
@@ -118,7 +118,7 @@ public class Storage {
 		return new LogEntry(lns.get(lns.size()-1).trim());
 	}
 	
-	void setStartDateOfLastEntry(LogEntry le) {
+	private void setStartDateOfLastEntry(LogEntry le) {
 		if(le == null) {
 			startDayOfLastEntry = null;
 			log.debug("startDayOfLastEntry set to null");
@@ -141,7 +141,11 @@ public class Storage {
 		LocalDate theDay = null;
 		List<LogEntry> dayEntries = new ArrayList<>();
 		
-		// usually this will be -1, but we added empty line to the beginning 
+		/*
+		 * lnCounter is shows where is error if there is one. It is incremented in the beginning of the iteration
+		 * We are added empty line to the beginning, hence modifying the source data, so for counter be correct
+		 * there is a need to subtract 1 from proper initial value
+		 */
 		int lnCounter = -2;
 		for (String ln : lns) {
 			lnCounter++;
