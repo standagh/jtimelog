@@ -26,7 +26,6 @@ public class Configuration {
         items.put("TIMEPATTERN", "HH:mm");
         items.put("DATEWITHDAYPATTERN", "yyyy-MM-dd (EEE)");
         items.put("REPORTTOOLPATH", "/opt/gtimelog_tools/");
-        items.put("LOGS_VIEW_FONT_SIZE", "20");
     }
 
     public static Configuration getConfiguration() {

@@ -113,8 +113,36 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         tasksTbl.setDefaultEditor(Object.class, null);
 
         logsViewTA.setEditable(false);
-        int fontSize = Configuration.getCfgInteger("LOGS_VIEW_FONT_SIZE");
-        logsViewTA.setFont(logsViewTA.getFont().deriveFont((float) fontSize));
+
+        logsViewTA.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent e) {
+                if (e.isControlDown()) {
+                    java.awt.Font font;
+                    float newSize;
+
+                    font = logsViewTA.getFont();
+                    newSize = font.getSize2D() - e.getWheelRotation() * 2f;
+                    newSize = Math.max(6f, Math.min(100f, newSize));
+                    logsViewTA.setFont(font.deriveFont(newSize));
+
+                    font = taskEdit.getFont();
+                    newSize = font.getSize2D() - e.getWheelRotation() * 2f;
+                    newSize = Math.max(6f, Math.min(100f, newSize));
+                    taskEdit.setFont(font.deriveFont(newSize));
+
+                    font = currentTValL.getFont();
+                    newSize = font.getSize2D() - e.getWheelRotation() * 2f;
+                    newSize = Math.max(6f, Math.min(100f, newSize));
+                    currentTValL.setFont(font.deriveFont(newSize));
+
+                    e.consume();
+                } else {
+                    java.awt.event.MouseWheelEvent parentEvent = (java.awt.event.MouseWheelEvent) javax.swing.SwingUtilities.convertMouseEvent(logsViewTA, e, jScrollPane1);
+                    jScrollPane1.dispatchEvent(parentEvent);
+                }
+            }
+        });
 
         try {
             ctrlLogs = new Logs();
@@ -346,7 +374,9 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         currentTValL.setText("00:00 (00:00)");
         currentTValL.setName(""); // NOI18N
 
+
         taskEdit.setName("enterLogTextField"); // NOI18N
+        // taskEdit.setFont(new java.awt.Font("Ubuntu Mono", 0, 16)); // NOI18N
         taskEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 taskEditActionPerformed(evt);
@@ -453,8 +483,8 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(currentTValL, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
+                        .addComponent(currentTValL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 5, 8)
                         .addComponent(taskEdit))
                     .addComponent(jSplitPane1))
                 .addContainerGap())
