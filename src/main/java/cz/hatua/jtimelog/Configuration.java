@@ -26,6 +26,7 @@ public class Configuration {
         items.put("TIMEPATTERN", "HH:mm");
         items.put("DATEWITHDAYPATTERN", "yyyy-MM-dd (EEE)");
         items.put("REPORTTOOLPATH", "/opt/gtimelog_tools/");
+        items.put("LOGS_VIEW_FONT_SIZE", "20");
     }
 
     public static Configuration getConfiguration() {
@@ -36,7 +37,7 @@ public class Configuration {
         }
         return instance;
     }
-    
+
     public static String getCfgString(String key) {
     	return  Configuration.getConfiguration().get(key);
     }
@@ -55,20 +56,20 @@ public class Configuration {
             }
         }
     }
-    
+
     void dumpConfiguration() {
         for(String k: instance.items.keySet()) {
             log.debug("{}=\"{}\"", ENVPrefix+k, instance.get(k));
         }
     }
-    
+
     public void resetConfiguration(Map<String,String> cfg) {
     	items = new HashMap<>();
     	for(String k: cfg.keySet()) {
     		items.put(k, cfg.get(k));
     	}
     }
-    
+
     public String get(String key) {
         return items.get(key);
     }

@@ -65,9 +65,9 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
     ActionChangeFormatDetailSorted actionChangeFormatDetailSorted;
     ActionChangeFormatSummary actionChangeFormatSummary;
 
-    
+
     TimerSinceLastMsgTask timerSinceLastMsgTask;
-    
+
     /**
      * Creates new form JTimeLog
      */
@@ -85,7 +85,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         tasksTbl.setModel(tasksModel);
 
         ctrlFormat = new FormatDayController();
-        
+
         Font f = tasksTbl.getFont().deriveFont(Font.ITALIC);
 
         DefaultTableCellRenderer r = new DefaultTableCellRenderer() {
@@ -111,9 +111,11 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         tasksTbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // no editing
         tasksTbl.setDefaultEditor(Object.class, null);
-        
+
         logsViewTA.setEditable(false);
-        
+        int fontSize = Configuration.getCfgInteger("LOGS_VIEW_FONT_SIZE");
+        logsViewTA.setFont(logsViewTA.getFont().deriveFont((float) fontSize));
+
         try {
             ctrlLogs = new Logs();
             ctrlCats = new Cats();
@@ -156,7 +158,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         for(String it: GTLSReport.getReportTypes()) {
             jCBReportType.addItem(it);
         }
-        
+
         populateCats();
 
         ctrlLogs.setNotificationTarget(this);
@@ -167,14 +169,14 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
 
     private class TimerSinceLastMsgTask extends SwingWorker<Void, Long> {
         public final LocalDateTime lastEntry;
-        
+
         TimerSinceLastMsgTask(LocalDateTime lastEntry) {
             if(lastEntry == null) {
                 throw new NullPointerException("lastEntry is null");
             }
             this.lastEntry = lastEntry;
         }
-        
+
         @Override
         protected Void doInBackground() {
             while (!isCancelled()) {
@@ -211,7 +213,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
             });
         });
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -555,8 +557,8 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         if (day == null || day.equals(ctrlLogs.getDisplayedDay())) {
             log.debug("Recreating content of text area");
             logsViewTA.setText(ctrlFormat.getCurrent().formatDayData(ctrlLogs.getDisplayedDayLogEntries()));
-            
-            
+
+
             /*
             Following code:
             - get DateTime of last entry of current day
@@ -585,7 +587,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
 //            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
