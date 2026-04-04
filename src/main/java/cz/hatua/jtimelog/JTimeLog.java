@@ -118,29 +118,25 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
             @Override
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent e) {
                 if (e.isControlDown()) {
-                    java.awt.Font font;
-                    float newSize;
 
-                    font = logsViewTA.getFont();
-                    newSize = font.getSize2D() - e.getWheelRotation() * 2f;
-                    newSize = Math.max(6f, Math.min(100f, newSize));
-                    logsViewTA.setFont(font.deriveFont(newSize));
-
-                    font = taskEdit.getFont();
-                    newSize = font.getSize2D() - e.getWheelRotation() * 2f;
-                    newSize = Math.max(6f, Math.min(100f, newSize));
-                    taskEdit.setFont(font.deriveFont(newSize));
-
-                    font = currentTValL.getFont();
-                    newSize = font.getSize2D() - e.getWheelRotation() * 2f;
-                    newSize = Math.max(6f, Math.min(100f, newSize));
-                    currentTValL.setFont(font.deriveFont(newSize));
+                    updateFontSize(logsViewTA, e);
+                    updateFontSize(taskEdit, e);
+                    updateFontSize(currentTValL, e);
+                    updateFontSize(displayDayL, e);
+                    updateFontSize(tasksTbl, e);
 
                     e.consume();
                 } else {
                     java.awt.event.MouseWheelEvent parentEvent = (java.awt.event.MouseWheelEvent) javax.swing.SwingUtilities.convertMouseEvent(logsViewTA, e, jScrollPane1);
                     jScrollPane1.dispatchEvent(parentEvent);
                 }
+            }
+
+            private void updateFontSize(Component comp, java.awt.event.MouseWheelEvent e) {
+                java.awt.Font font = comp.getFont();
+                float newSize = font.getSize2D() - e.getWheelRotation() * 2f;
+                newSize = Math.max(6f, Math.min(100f, newSize));
+                comp.setFont(font.deriveFont(newSize));
             }
         });
 
