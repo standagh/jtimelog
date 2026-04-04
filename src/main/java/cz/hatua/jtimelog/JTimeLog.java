@@ -86,21 +86,16 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
 
         ctrlFormat = new FormatDayController();
 
-        Font f = tasksTbl.getFont().deriveFont(Font.ITALIC);
-
         DefaultTableCellRenderer r = new DefaultTableCellRenderer() {
-            Font font = f;
-
             @Override
             public Component getTableCellRendererComponent(JTable table,
                     Object value, boolean isSelected, boolean hasFocus,
                     int row, int column) {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
                         row, column);
-                setFont(font);
+                setFont(table.getFont().deriveFont(Font.ITALIC));
                 return this;
             }
-
         };
         // doesn't work because the default renderer's font is reset
         // to the table's font always
@@ -122,8 +117,8 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
                     updateFontSize(logsViewTA, e);
                     updateFontSize(taskEdit, e);
                     updateFontSize(currentTValL, e);
-                    updateFontSize(displayDayL, e);
                     updateFontSize(tasksTbl, e);
+                    tasksTbl.setRowHeight(tasksTbl.getFontMetrics(tasksTbl.getFont()).getHeight() + 6);
 
                     e.consume();
                 } else {
