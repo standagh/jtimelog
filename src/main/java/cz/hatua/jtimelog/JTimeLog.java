@@ -291,6 +291,9 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         jMenuItemEditCategories = new javax.swing.JMenuItem();
         jMenuItemReload = new javax.swing.JMenuItem();
 
+        // var propFontDef = new java.awt.Font("Ubuntu Mono", 0, 20);
+        // var propFontDef = new java.awt.Font("DejaVu Sans Mono", 0, 20);
+        var propFontDef = new java.awt.Font("Liberation Mono", 0, 18);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jSplitPane1.setDividerSize(11);
@@ -299,7 +302,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         jLabel1.setText("Report:");
 
         logsViewTA.setColumns(20);
-        logsViewTA.setFont(new java.awt.Font("Ubuntu Mono", 0, 16)); // NOI18N
+        logsViewTA.setFont(propFontDef); // NOI18N
         logsViewTA.setRows(5);
         jScrollPane1.setViewportView(logsViewTA);
 
@@ -374,13 +377,12 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
 
         jSplitPane1.setRightComponent(jPanel1);
 
-        currentTValL.setFont(new java.awt.Font("Ubuntu Mono", 0, 16)); // NOI18N
+        currentTValL.setFont(propFontDef); // NOI18N
         currentTValL.setText("00:00 (00:00)");
         currentTValL.setName(""); // NOI18N
 
 
         taskEdit.setName("enterLogTextField"); // NOI18N
-        // taskEdit.setFont(new java.awt.Font("Ubuntu Mono", 0, 16)); // NOI18N
         taskEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 taskEditActionPerformed(evt);
