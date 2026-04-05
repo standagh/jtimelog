@@ -107,31 +107,30 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         // no editing
         tasksTbl.setDefaultEditor(Object.class, null);
 
-        logsViewTA.setEditable(false);
+        tasksTbl.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent e) {
+                if (e.isControlDown()) {
+                    mouseWheelMovedHandler(e);
+                    e.consume();
+                } else {
+                    java.awt.event.MouseWheelEvent parentEvent = (java.awt.event.MouseWheelEvent) javax.swing.SwingUtilities.convertMouseEvent(tasksTbl, e, jScrollPane2);
+                    jScrollPane2.dispatchEvent(parentEvent);
+                }
+            }
+        });
 
+        logsViewTA.setEditable(false);
         logsViewTA.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             @Override
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent e) {
                 if (e.isControlDown()) {
-
-                    updateFontSize(logsViewTA, e);
-                    updateFontSize(taskEdit, e);
-                    updateFontSize(currentTValL, e);
-                    updateFontSize(tasksTbl, e);
-                    tasksTbl.setRowHeight(tasksTbl.getFontMetrics(tasksTbl.getFont()).getHeight() + 6);
-
+                    mouseWheelMovedHandler(e);
                     e.consume();
                 } else {
                     java.awt.event.MouseWheelEvent parentEvent = (java.awt.event.MouseWheelEvent) javax.swing.SwingUtilities.convertMouseEvent(logsViewTA, e, jScrollPane1);
                     jScrollPane1.dispatchEvent(parentEvent);
                 }
-            }
-
-            private void updateFontSize(Component comp, java.awt.event.MouseWheelEvent e) {
-                java.awt.Font font = comp.getFont();
-                float newSize = font.getSize2D() - e.getWheelRotation() * 2f;
-                newSize = Math.max(6f, Math.min(100f, newSize));
-                comp.setFont(font.deriveFont(newSize));
             }
         });
 
@@ -184,6 +183,21 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         ctrlLogs.sendEntriesChangedNotification(ctrlLogs.getDisplayedDay());
         updateDisplaydDayLabel();
         log.debug("Initialization done");
+    }
+
+    private void mouseWheelMovedHandler(java.awt.event.MouseWheelEvent e) {
+        updateFontSize(logsViewTA, e);
+        updateFontSize(taskEdit, e);
+        updateFontSize(currentTValL, e);
+        updateFontSize(tasksTbl, e);
+        tasksTbl.setRowHeight(tasksTbl.getFontMetrics(tasksTbl.getFont()).getHeight() + 6);
+    }
+
+    private void updateFontSize(Component comp, java.awt.event.MouseWheelEvent e) {
+        java.awt.Font font = comp.getFont();
+        float newSize = font.getSize2D() - e.getWheelRotation() * 2f;
+        newSize = Math.max(6f, Math.min(100f, newSize));
+        comp.setFont(font.deriveFont(newSize));
     }
 
     private class TimerSinceLastMsgTask extends SwingWorker<Void, Long> {
