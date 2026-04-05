@@ -281,7 +281,6 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
 
         jSplitPane1.setDividerSize(11);
         jSplitPane1.setResizeWeight(0.5);
-        jSplitPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.W_RESIZE_CURSOR));
 
         jLabel1.setText("Report:");
 
