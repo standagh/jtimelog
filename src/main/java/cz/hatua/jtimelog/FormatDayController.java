@@ -1,5 +1,6 @@
 package cz.hatua.jtimelog;
 
+import cz.hatua.jtimelog.cats.Cats;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -11,11 +12,11 @@ public class FormatDayController {
 	Map<String,FormatDayGeneral> all;
 	FormatDayGeneral current;
 	
-	public FormatDayController() {
+	public FormatDayController(Cats cats) {
 		all = new HashMap<>();
 		all.put("format_detail", new FormatDayDataDetail());
 		all.put("format_detail_sorted", new FormatDayDataDetailSorted());
-		all.put("format_summary", new FormatDayDataGroupByTasks());
+		all.put("format_summary", new FormatDayDataGroupByTasks(cats));
 		setCurrent("format_detail");
 	}
 

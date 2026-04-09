@@ -39,6 +39,15 @@ public class Cats {
     public Map<String, List<Cat>> getAllCats() {
         return allCats.getAllCats();
     }
-   
-    
+
+    public Cat findByName(String name) {
+        for (List<Cat> cats : allCats.getAllCats().values()) {
+            for (Cat c : cats) {
+                if (c.getCat().equals(name)) return c;
+            }
+        }
+        return null;
+    }
+
+
 }

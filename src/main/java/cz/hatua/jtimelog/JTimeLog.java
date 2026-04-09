@@ -84,8 +84,6 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         //tasksModel.addRow(new String[] {"MDT", "MDT_Issue", "Issue" });
         tasksTbl.setModel(tasksModel);
 
-        ctrlFormat = new FormatDayController();
-
         DefaultTableCellRenderer r = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table,
@@ -137,6 +135,7 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         try {
             ctrlLogs = new Logs();
             ctrlCats = new Cats();
+            ctrlFormat = new FormatDayController(ctrlCats);
         } catch (JTimeLogException e) {
             log.error("Error while initializing JTimelog", e);
             throw new RuntimeException("Error while initializing JTimelog", e);

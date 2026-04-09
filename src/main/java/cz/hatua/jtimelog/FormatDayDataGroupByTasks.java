@@ -5,6 +5,8 @@
  */
 package cz.hatua.jtimelog;
 
+import cz.hatua.jtimelog.cats.Cat;
+import cz.hatua.jtimelog.cats.Cats;
 import cz.hatua.jtimelog.logs.DayLogEntries;
 import cz.hatua.jtimelog.logs.LogEntry;
 import java.time.LocalDateTime;
@@ -19,6 +21,12 @@ import java.util.TreeSet;
  * @author standa
  */
 public class FormatDayDataGroupByTasks extends FormatDayData {
+
+    private final Cats cats;
+
+    public FormatDayDataGroupByTasks(Cats cats) {
+        this.cats = cats;
+    }
 
     @Override
     public String formatDayData(DayLogEntries dayLogEntries) {
@@ -64,8 +72,10 @@ public class FormatDayDataGroupByTasks extends FormatDayData {
         }
 
         
-        for(String k: new TreeSet<String>(tasksTimesMins.keySet())) {
-            out.append(String.format("            (%s)  %s\n", formatTimespanMinutes(tasksTimesMins.get(k)), k));
+        for (String k : new TreeSet<>(tasksTimesMins.keySet())) {
+            Cat cat = cats.findByName(k);
+            String suffix = (cat != null && !cat.getNote().isEmpty()) ? ": " + cat.getNote() : "";
+            out.append(String.format("            (%s)  %s%s\n", formatTimespanMinutes(tasksTimesMins.get(k)), k, suffix));
         }
         
         
