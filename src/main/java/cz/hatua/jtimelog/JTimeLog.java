@@ -240,8 +240,9 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
         */
         allCats.keySet().forEach((g) -> {
             allCats.get(g).forEach((c) -> {
-                //tasksModel.addRow(new String[] {c.getGroup(), c.getCat(), c.getNote() });
-                tasksModel.addRow(new String[]{c.getCat(), c.getNote()});
+                if(c.isVisibile()) {
+                    tasksModel.addRow(new String[]{c.getCat(), c.getNote()});
+                }
             });
         });
     }

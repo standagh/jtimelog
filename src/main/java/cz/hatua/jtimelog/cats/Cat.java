@@ -15,13 +15,14 @@ import org.slf4j.LoggerFactory;
  */
 public class Cat {
     private static final Logger log = LoggerFactory.getLogger(Cat.class);
-	
+
     final static String DEFAULT_GROUP_NAME = "Default";
     final static String DEFAULT_CATEGORY_NOTE = "";
-	
+
     String group;
     String cat;
     String note;
+	boolean isVisibile = true;
 
     Cat(String ln) {
     	ln = ln.trim();
@@ -34,7 +35,7 @@ public class Cat {
     	if(ln.indexOf(':') > 0) {
             ln = ln.substring(ln.indexOf(':') + 1);
     	}
-    	
+
     	// Parse cat name
     	if(ln.indexOf(';') == -1) {
     		cat = ln;
@@ -47,15 +48,24 @@ public class Cat {
     		throw new IllegalArgumentException(String.format("Category in line is empty: '%s'", ln));
     	}
 
+    	// Parse visibility flag
+    	if(cat.startsWith("*")) {
+    		isVisibile = false;
+    		cat = cat.substring(1);
+    		if(cat.length() == 0) {
+    			throw new IllegalArgumentException(String.format("Category name after '*' is empty: '%s'", ln));
+    		}
+    	}
+
     	// Parse note
 		note = ln;
     }
 
-    
+
 	public String getGroup() {
 		return group;
 	}
-	
+
 	public String getCat() {
 		return cat;
 	}
@@ -63,7 +73,11 @@ public class Cat {
 	public String getNote() {
 		return note;
 	}
-	
+
+	public boolean isVisibile() {
+		return isVisibile;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Group: '%s'; Cat: '%s', Note: '%s'", group.toString(), cat, note);
