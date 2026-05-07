@@ -49,7 +49,7 @@ public class Cat {
     	}
 
     	// Parse visibility flag
-    	if(cat.startsWith("*")) {
+    	if(cat.startsWith("*") && !cat.startsWith("**")) {
     		isVisibile = false;
     		cat = cat.substring(1);
     		if(cat.length() == 0) {
