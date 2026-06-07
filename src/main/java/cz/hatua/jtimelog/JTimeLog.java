@@ -293,7 +293,12 @@ public class JTimeLog extends javax.swing.JFrame implements EntriesChangedNotifi
 
         // var propFontDef = new java.awt.Font("Ubuntu Mono", 0, 20);
         // var propFontDef = new java.awt.Font("DejaVu Sans Mono", 0, 20);
-        var propFontDef = new java.awt.Font("Liberation Mono", 0, 18);
+
+        int propFontSize = 24;
+        if(System.getenv("JTIMELOG_MONOFONT_SIZE") != null) {
+            propFontSize = Integer.parseInt(System.getenv("JTIMELOG_MONOFONT_SIZE"));
+        }
+        var propFontDef = new java.awt.Font("Liberation Mono", 0, propFontSize);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jSplitPane1.setDividerSize(11);
